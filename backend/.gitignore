@@ -1,0 +1,61 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+*.log
+*.sqlite3
+
+# ---- Virtual Environment ----
+# If your venv is named "venv" or ".venv"
+venv/
+.venv/
+env/
+ENV/
+.ENV/
+
+# ---- Environment Variables ----
+*.env
+.env.*
+
+# ---- IDE / Editor Files ----
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ---- macOS ----
+.DS_Store
+
+# ---- Byte-compiled / C extensions ----
+build/
+dist/
+.eggs/
+*.egg-info/
+
+# ---- Testing ----
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+
+# ---- Migrations / Database ----
+migrations/
+alembic/
+*.db
+
+# ---- Cache ----
+.cache/
+__pycache__/
+
+# ---- Logs ----
+logs/
+*.log
+
+# ---- FastAPI specific ----
+# (none needed by default, but useful if you store generated files)
+generated/
+staticfiles/
