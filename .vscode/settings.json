@@ -1,5 +1,12 @@
 {
   "python-envs.defaultEnvManager": "ms-python.python:system",
   "python-envs.defaultPackageManager": "ms-python.python:pip",
-  "python-envs.pythonProjects": []
+  "python-envs.pythonProjects": [],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "editor.mouseWheelZoom": false
 }
