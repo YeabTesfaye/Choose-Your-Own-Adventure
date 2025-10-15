@@ -3,7 +3,7 @@ from sqlalchemy.sql import func
 
 from db.database import Base
 
-class Story(Base):
+class StoryJob(Base):
     __tablename__ = "story_job"
     
     id = Column(Integer, primary_key=True, index=True)
