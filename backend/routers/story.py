@@ -14,8 +14,13 @@ from schemas.story import (
 )
 from schemas.job import StoryJobResponse
 from core.story_generator import StoryGenerator
+from utils.auth import get_current_user, CurrentUser
 
-router = APIRouter(prefix="/stories", tags=["stories"])
+router = APIRouter(
+    prefix="/stories", tags=["stories"], dependencies=[Depends(get_current_user)]
+)
+
+current_user: CurrentUser = Depends(get_current_user)
 
 
 def get_session_id(session_id: Optional[str] = Cookie(None)):
@@ -31,13 +36,18 @@ def create_story(
     response: Response,
     session_id: str = Depends(get_session_id),
     db: Session = Depends(get_db),
+    # current_user: CurrentUser = Depends(get_current_user),  # 👈 Protected
 ):
     response.set_cookie(key="session_id", value=session_id, httponly=True)
 
     job_id = str(uuid.uuid4())
 
     job = StoryJob(
-        job_id=job_id, session_id=session_id, theme=request.theme, status="pending"
+        job_id=job_id,
+        session_id=session_id,
+        theme=request.theme,
+        status="pending",
+        # user_id : current_user.user_id
     )
     db.add(job)
     db.commit()

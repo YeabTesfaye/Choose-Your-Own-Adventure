@@ -4,69 +4,136 @@
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![React](https://img.shields.io/badge/React-18-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.1-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.111.1-green)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.119.0-green)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-blue)
+![Docker](https://img.shields.io/badge/Docker-Ready-blue)
 
-> Generate your own branching adventure stories dynamically! Powered by FastAPI, React + TypeScript, and integrated with Google APIs / LLMs.
+> ✨ A full-stack AI storytelling app that generates dynamic branching adventures using **FastAPI**, **React + TypeScript**, and **Google Generative AI**.
 
 ---
 
 ## 🚀 Features
 
-- **Dynamic Story Generation:** Enter a theme and receive a fully interactive story generated on the fly.
-- **Branching Story Paths:** Multiple choices lead to different outcomes, including winning endings.
-- **User-Friendly UI:** Modern interface with loading states and error handling.
-- **API-Driven:** Backend powered by FastAPI and integrated with Google APIs / Gemini API.
-- **Frontend Stack:** React + TypeScript + Vite for fast and type-safe development.
+- **AI-Powered Story Generation:** Create original, interactive adventure stories on demand.
+- **Branching Narratives:** Each choice leads to unique outcomes and endings.
+- **Full-Stack Integration:** React frontend + FastAPI backend + PostgreSQL database.
+- **Dockerized Setup:** Run the whole project (frontend, backend, and DB) with one command.
+- **Environment-Based Configuration:** Easy customization via `.env`.
+- **Modern UI:** Built with Vite + Tailwind for speed and elegance.
 
 ---
 
-## ⚡ Getting Started
+## ⚙️ Prerequisites
 
-### Prerequisites
+Before you start, make sure you have:
 
-- Node.js >= 18
-- Python >= 3.11
-- `pip` & `venv`
+- **Docker** and **Docker Compose**
+- **Node.js ≥ 18** (for local frontend development if needed)
+- **Python ≥ 3.11** (optional if not using Docker)
 
 ---
 
-### Backend Setup
+## 🧱 Project Structure
+
+```
+choose-your-own-adventure/
+│
+├── backend/               # FastAPI application
+│   ├── main.py
+│   ├── routers/
+│   ├── core/
+│   ├── db/
+│   ├── Dockerfile
+│   └── .env
+│
+├── frontend/              # React + TypeScript + Vite app
+│   ├── src/
+│   ├── Dockerfile
+│   └── package.json
+│
+└── docker-compose.yml     # Orchestration for backend, frontend, and PostgreSQL
+```
+
+---
+
+## 🐳 Running with Docker
+
+Run the entire stack with a single command:
+
+```bash
+docker compose up -d --build
+```
+
+This will start:
+
+| Service      | Description            | URL                                                      |
+| ------------ | ---------------------- | -------------------------------------------------------- |
+| **frontend** | React + Vite app       | [http://localhost:5173](http://localhost:5173)           |
+| **backend**  | FastAPI API server     | [http://localhost:8000/docs](http://localhost:8000/docs) |
+| **db**       | PostgreSQL 17 database | localhost:5432                                           |
+
+---
+
+## 🧩 Environment Variables (`.env`)
+
+Your backend `.env` file should look like this:
+
+```env
+API_PREFIX=/api
+DEBUG=True
+DATABASE_URL=postgress_database_url
+ALLOWED_ORIGINS=["http://localhost:5173"]
+GOOGLE_API_KEYS=["apikey1","apikey2"]
+```
+
+---
+
+## 🛠️ API Endpoints
+
+| Endpoint                           | Method   | Description                           |
+| ---------------------------------- | -------- | ------------------------------------- |
+| `/api/stories/create`              | **POST** | Generate a new story based on a theme |
+| `/api/jobs/{job_id}`               | **GET**  | Get story generation status           |
+| `/api/stories/{story_id}/complete` | **GET**  | Fetch completed story                 |
+
+---
+
+## 🧠 Tech Stack
+
+**Frontend**
+
+- React 18 + TypeScript + Vite
+- TailwindCSS
+
+**Backend**
+
+- FastAPI + Uvicorn
+- SQLAlchemy + Psycopg2
+- Pydantic + Pydantic Settings
+- Google Generative AI SDK
+
+**Infrastructure**
+
+- Docker + Docker Compose
+- PostgreSQL 17
+
+---
+
+## 🧰 Local Development (Optional)
+
+If you prefer to run it manually without Docker:
+
+### Backend
 
 ```bash
 cd backend
-# Create a virtual environment
 python -m venv venv
-
-# Activate it
-# macOS/Linux
-source venv/bin/activate
-# Windows
-.\venv\Scripts\activate
-
-# Install dependencies
-uv install
-
+source venv/bin/activate  # or .\venv\Scripts\activate on Windows
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-Create a `.env` file (example provided):
-
-```env
-DATABASE_URL=sqlite:///./database.db
-API_PREFIX=/api
-DEBUG=TRUE
-ALLOWED_ORIGINS=["http://localhost:3000","http://localhost:5173"]
-GOOGLE_API_KEYS=["key1","key2","key3"]
-```
-
-Run the backend with `uvicorn`:
-
-```bash
-uv run main.py
-```
-
----
-
-### Frontend Setup
+### Frontend
 
 ```bash
 cd frontend
@@ -74,46 +141,29 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173` in your browser.
-
----
-
-## 🛠️ API Endpoints
-
-- `POST /stories/create` → Generate a new story by theme.
-- `GET /jobs/{job_id}` → Poll story generation status.
-- `GET /stories/{story_id}/complete` → Fetch a completed story.
-
----
-
-## 🎯 Usage
-
-1. Enter a theme (e.g., "space pirates", "medieval quest").
-2. Click **Generate Story**.
-3. Wait for story generation (loading state shown).
-4. Play through the story by choosing options.
-5. Explore multiple endings and branching paths.
-
----
-
-## 📦 Tech Stack
-
-- **Frontend:** React + TypeScript + Vite + TailwindCSS
-- **Backend:** Python + FastAPI + Pydantic + SQLite
-- **APIs:** Google APIs / Gemini API for story generation
+Then open [http://localhost:5173](http://localhost:5173).
 
 ---
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a branch (`git checkout -b feature/my-feature`)
-3. Commit your changes (`git commit -m 'Add feature'`)
+1. Fork this repository
+2. Create your branch (`git checkout -b feature/my-feature`)
+3. Commit changes (`git commit -m 'Add feature'`)
 4. Push to your branch (`git push origin feature/my-feature`)
-5. Open a Pull Request
+5. Open a Pull Request 🚀
 
 ---
 
 ## 📄 License
 
-MIT License – see LICENSE file for details.
+This project is licensed under the **MIT License** — see the `LICENSE` file for details.
+
+---
+
+## 💡 Future Ideas
+
+- Add authentication (JWT / OAuth)
+- Save user story progress to DB
+- Enable collaborative story writing
+- Implement a leaderboard for creative endings
