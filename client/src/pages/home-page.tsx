@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-
 import { BookOpen, Sparkles, Zap, Users } from "lucide-react";
-import { Button } from "./ui/button";
-import { Card, CardContent } from "./ui/card";
+import { Button } from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
 
 export default function HomePage() {
   return (
@@ -30,16 +29,12 @@ export default function HomePage() {
             adventures.
           </p>
 
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          {/* Only one button now */}
+          <div className="flex items-center justify-center">
             <Link to="/generate">
               <Button size="lg" className="gap-2">
                 <Sparkles className="h-5 w-5" />
                 Start Creating
-              </Button>
-            </Link>
-            <Link to="/login">
-              <Button size="lg" variant="outline">
-                View Stories
               </Button>
             </Link>
           </div>

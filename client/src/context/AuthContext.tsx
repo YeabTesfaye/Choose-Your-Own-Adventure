@@ -6,32 +6,48 @@ import {
   useEffect,
 } from "react";
 import { api } from "../api";
+import type { User } from "../lib/types";
 
 interface AuthContextType {
-  user: { email: string; first_name: string; last_name: string } | null;
+  user: User | null;
   login: (user: any) => void;
   logout: () => void;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchUser = async () => {
     const token = localStorage.getItem("token");
-    if (token) {
-      api
-        .get("/users/me")
-        .then((res) => {
-          setUser(res.data);
-        })
-        .catch(() => {
-          localStorage.removeItem("token");
-          setUser(null);
-        });
+    if (!token) {
+      setUser(null);
+      setLoading(false);
+      return;
     }
+
+    try {
+      const res = await api.get("/users/me");
+      setUser(res.data);
+    } catch {
+      localStorage.removeItem("token");
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchUser();
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "token") fetchUser();
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
+
   const login = (userData: any) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
@@ -44,7 +60,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

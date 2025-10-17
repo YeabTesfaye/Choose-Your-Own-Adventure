@@ -8,12 +8,12 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "../components/ui/card";
 import { AlertCircle, CheckCircle2, Loader2, Sparkles } from "lucide-react";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Alert, AlertDescription } from "./ui/alert";
-import { Button } from "./ui/button";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
+import { Alert, AlertDescription } from "../components/ui/alert";
+import { Button } from "../components/ui/button";
 
 export default function GeneratePage() {
   const navigate = useNavigate();

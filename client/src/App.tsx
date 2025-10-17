@@ -5,15 +5,16 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import HomePage from "./components/home-page";
 import LoginPage from "./components/Login-page";
 import SignupPage from "./components/signup";
-import GeneratePage from "./components/generate-page";
-import ProfilePage from "./components/profile-page";
+
 import Navbar from "./components/navbar";
 import { AuthRedirectRoute, ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
-import StoryPage from "./components/story-page";
+import HomePage from "./pages/home-page";
+import GeneratePage from "./pages/generate-page";
+import ProfilePage from "./pages/profile-page";
+import StoryPage from "./pages/story-page";
 
 function App() {
   return (

@@ -13,7 +13,7 @@ import { Separator } from "../components/ui/separator";
 import { RotateCcw, Sparkles, Trophy, AlertCircle } from "lucide-react";
 import type { Story, StoryNode, StoryOption } from "../lib/types";
 import { cn } from "../lib/utils";
-import StoryLoader from "./story-loader";
+import StoryLoader from "../components/story-loader";
 
 export default function StoryPage() {
   const navigate = useNavigate();

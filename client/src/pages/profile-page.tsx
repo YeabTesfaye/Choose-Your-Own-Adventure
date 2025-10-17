@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 
 import { User, Mail, Badge } from "lucide-react";
+
+import { api } from "../api";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Avatar, AvatarFallback } from "./ui/avatar";
-import { api } from "../api";
-import LoadingSpinner from "./loading-spinner";
+} from "../components/ui/card";
+import LoadingSpinner from "../components/loading-spinner";
+import { Avatar, AvatarFallback } from "../components/ui/avatar";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<{
