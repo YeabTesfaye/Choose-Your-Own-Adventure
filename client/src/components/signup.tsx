@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { BookOpen, Loader2 } from "lucide-react";
 import {
   Card,
@@ -15,36 +15,35 @@ import { Input } from "./ui/input";
 import { Alert, AlertDescription } from "./ui/alert";
 import { Button } from "./ui/button";
 import { api } from "../api";
+import { useState } from "react";
+import { signupSchema, type SignupFormData } from "../validation/signupSchema";
 
 export default function SignupPage() {
   const navigate = useNavigate();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
 
-  const handleSignup = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+  });
 
+  const onSubmit = async (data: SignupFormData) => {
+    setServerError(null);
     try {
       await api.post("/users/register", {
-        first_name: firstName,
-        last_name: lastName,
-        email,
-        password,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        email: data.email,
+        password: data.password,
       });
-
       navigate("/login");
     } catch (err: any) {
-      setError(
+      setServerError(
         err.response?.data?.detail || "Signup failed. Please try again."
       );
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -60,7 +59,7 @@ export default function SignupPage() {
       </Link>
 
       <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
+        <CardHeader>
           <CardTitle className="text-2xl font-bold">
             Create an account
           </CardTitle>
@@ -68,67 +67,81 @@ export default function SignupPage() {
             Enter your information to get started
           </CardDescription>
         </CardHeader>
+
         <CardContent>
-          <form onSubmit={handleSignup} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="firstName">First name</Label>
                 <Input
                   id="firstName"
-                  type="text"
                   placeholder="John"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  required
-                  disabled={loading}
+                  {...register("firstName")}
+                  disabled={isSubmitting}
                 />
+                {errors.firstName && (
+                  <p className="text-sm text-red-500">
+                    {errors.firstName.message}
+                  </p>
+                )}
               </div>
+
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last name</Label>
                 <Input
                   id="lastName"
-                  type="text"
                   placeholder="Doe"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  required
-                  disabled={loading}
+                  {...register("lastName")}
+                  disabled={isSubmitting}
                 />
+                {errors.lastName && (
+                  <p className="text-sm text-red-500">
+                    {errors.lastName.message}
+                  </p>
+                )}
               </div>
             </div>
+
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
-                type="email"
                 placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={loading}
+                {...register("email")}
+                disabled={isSubmitting}
               />
+              {errors.email && (
+                <p className="text-sm text-red-500">{errors.email.message}</p>
+              )}
             </div>
+
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                disabled={loading}
+                {...register("password")}
+                disabled={isSubmitting}
               />
+              {errors.password && (
+                <p className="text-sm text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
+              <p className="text-xs text-muted-foreground">
+                Must include uppercase, lowercase, number & special character.
+              </p>
             </div>
 
-            {error && (
+            {serverError && (
               <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
+                <AlertDescription>{serverError}</AlertDescription>
               </Alert>
             )}
 
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? (
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Creating account...
@@ -139,6 +152,7 @@ export default function SignupPage() {
             </Button>
           </form>
         </CardContent>
+
         <CardFooter className="flex flex-col gap-4">
           <div className="text-center text-sm text-muted-foreground">
             Already have an account?{" "}

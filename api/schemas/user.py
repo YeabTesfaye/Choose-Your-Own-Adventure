@@ -1,12 +1,8 @@
-from pydantic import (
-    BaseModel,
-    EmailStr,
-    model_validator,
-    ValidationError,
-)
+from pydantic import BaseModel, EmailStr, model_validator, Field, validator
 from uuid import UUID
 from datetime import datetime
 from typing import Optional
+import re
 
 
 # -------------------------------
@@ -32,6 +28,26 @@ class UserCreate(BaseModel):
     first_name: str
     last_name: str
     password: str
+
+    @validator("first_name", "last_name")
+    def validate_name(cls, value):
+        if not re.match(r"^[A-Za-z]+$", value):
+            raise ValueError(
+                "Name must contain only letters (no numbers or special characters)."
+            )
+        return value
+
+    @validator("password")
+    def validate_password(cls, value):
+        if not re.search(r"[A-Z]", value):
+            raise ValueError("Password must contain at least one uppercase letter.")
+        if not re.search(r"[a-z]", value):
+            raise ValueError("Password must contain at least one lowercase letter.")
+        if not re.search(r"[0-9]", value):
+            raise ValueError("Password must contain at least one number.")
+        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", value):
+            raise ValueError("Password must contain at least one special character.")
+        return value
 
     class Config:
         from_attributes = True
@@ -65,7 +81,6 @@ class PasswordChange(BaseModel):
 
     class Config:
         from_attributes = True
-
 
 
 class Token(BaseModel):
