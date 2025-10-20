@@ -5,7 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import LoginPage from "./components/Login-page";
+import LoginPage from "./pages/Login-page";
 import SignupPage from "./components/signup";
 
 import Navbar from "./components/navbar";

@@ -1,6 +1,5 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends
-from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from utils.exceptions import UserNotFoundError
 from models.user import User
@@ -25,7 +24,7 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
 
 @router.get("/me", response_model=UserResponse)
 def get_current_user_info(current_user: CurrentUser, db: Session = Depends(get_db)):
-    user_id = UUID(current_user.user_id)  # ✅ convert string → UUID
+    user_id = UUID(current_user.user_id)
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         raise UserNotFoundError()

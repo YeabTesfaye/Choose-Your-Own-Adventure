@@ -14,7 +14,7 @@ import { Label } from "../components/ui/label";
 import { Alert, AlertDescription } from "../components/ui/alert";
 import { BookOpen, Loader2 } from "lucide-react";
 import { api } from "../api";
-import LoadingSpinner from "./loading-spinner";
+import LoadingSpinner from "../components/loading-spinner";
 import { useAuth } from "../context/AuthContext"; // ✅ import useAuth
 
 export default function LoginPage() {

@@ -67,26 +67,6 @@ class PasswordChange(BaseModel):
         from_attributes = True
 
 
-# --- Example usage ---
-try:
-    PasswordChange(
-        current_password="oldpass",
-        new_password="newpass",
-        new_password_confirm="newpass",
-    )
-    print("Passwords match validation passed.")
-except ValidationError as e:
-    print(e)
-
-try:
-    PasswordChange(
-        current_password="oldpass",
-        new_password="newpass",
-        new_password_confirm="different",
-    )
-except ValidationError as e:
-    print(e)
-
 
 class Token(BaseModel):
     access_token: str

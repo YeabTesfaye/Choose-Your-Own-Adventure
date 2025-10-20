@@ -1,0 +1,27 @@
+node_modules
+
+# Build output
+dist
+.vite
+.next
+
+# Project files
+.git
+.gitignore
+.env
+.env.*
+.vscode/
+
+# TypeScript cache
+tsconfig.tsbuildinfo
+
+# Test and coverage files
+*.test.js
+*.spec.js
+coverage/
+
+# Misc
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
