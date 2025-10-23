@@ -38,7 +38,7 @@ Before you start, make sure you have:
 ```
 choose-your-own-adventure/
 │
-├── backend/               # FastAPI application
+├── api/               # FastAPI application
 │   ├── main.py
 │   ├── routers/
 │   ├── core/
@@ -46,7 +46,7 @@ choose-your-own-adventure/
 │   ├── Dockerfile
 │   └── .env
 │
-├── frontend/              # React + TypeScript + Vite app
+├── client/              # React + TypeScript + Vite app
 │   ├── src/
 │   ├── Dockerfile
 │   └── package.json
