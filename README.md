@@ -1,18 +1,14 @@
-Here’s a **sleek, modernized version** of your README, using badges, emojis, and clean formatting similar to the first one you shared. I’ve also made the structure more visually appealing and easy to scan.
-
-````markdown
 <div align="center">
   <h1>🪄 Choose-Your-Own-Adventure</h1>
-  <p>A full-stack AI storytelling app that generates dynamic branching adventures using <strong>FastAPI</strong>, <strong>React + TypeScript</strong>, and <strong>Google Generative AI</strong>.</p>
-  <div>
-    <img src="https://img.shields.io/badge/build-passing-brightgreen" alt="Build Status"/>
-    <img src="https://img.shields.io/badge/license-MIT-blue" alt="License"/>
-    <img src="https://img.shields.io/badge/React-18-blue" alt="React"/>
-    <img src="https://img.shields.io/badge/TypeScript-5.1-blue" alt="TypeScript"/>
-    <img src="https://img.shields.io/badge/FastAPI-0.119.0-green" alt="FastAPI"/>
-    <img src="https://img.shields.io/badge/PostgreSQL-17-blue" alt="PostgreSQL"/>
-    <img src="https://img.shields.io/badge/Docker-Ready-blue" alt="Docker"/>
-  </div>
+  <p>A full-stack AI storytelling app with FastAPI, React + TypeScript, and Google Generative AI.</p>
+  
+  <img src="https://img.shields.io/badge/build-passing-brightgreen" alt="Build Status"/>
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License"/>
+  <img src="https://img.shields.io/badge/React-18-blue" alt="React"/>
+  <img src="https://img.shields.io/badge/TypeScript-5.1-blue" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/FastAPI-0.119.0-green" alt="FastAPI"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-17-blue" alt="PostgreSQL"/>
+  <img src="https://img.shields.io/badge/Docker-Ready-blue" alt="Docker"/>
 </div>
 
 ---
@@ -76,6 +72,7 @@ Run the entire stack in one command:
 ```bash
 docker compose up -d --build
 ```
+
 ````
 
 | Service  | Description            | URL                                                      |
@@ -156,3 +153,4 @@ choose-your-own-adventure/
 ## 📄 License
 
 MIT License — see `LICENSE` for details.
+````
